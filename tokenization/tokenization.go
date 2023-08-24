@@ -21,12 +21,12 @@ var Char = map[byte]bool{
 	'`':  true,
 	')':  true,
 	'(':  true,
-	'<':  true,
-	'>':  true,
-	'=':  true,
-	'/':  true,
-	'"':  true,
-	'-':  true,
+	// '<':  true,
+	'>': true,
+	'=': true,
+	// '/':  true,
+	'"': true,
+	'-': true,
 }
 
 var StopWords map[string]bool = make(map[string]bool, 665)
