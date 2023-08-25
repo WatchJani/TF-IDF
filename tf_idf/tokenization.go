@@ -21,12 +21,12 @@ var Char = map[byte]bool{
 	'`':  true,
 	')':  true,
 	'(':  true,
-	// '<':  true,
-	'>': true,
-	'=': true,
-	// '/':  true,
-	'"': true,
-	'-': true,
+	'<':  true,
+	'>':  true,
+	'=':  true,
+	'/':  true,
+	'"':  true,
+	'-':  true,
 }
 
 var StopWords map[string]bool = make(map[string]bool, 665)
@@ -39,7 +39,7 @@ func Tokenization(text string) (map[string]float32, []string, int) {
 	for _, word := range allWords {
 		//parse word to readable format
 		wordChanger(&word)
-
+		// word = strings.TrimSpace(word)
 		//check if is number or if is stop word
 		if IsNumber(word) || StopWords[word] {
 			continue

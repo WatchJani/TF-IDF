@@ -42,7 +42,7 @@ func (i *IDF) TF_IDF(text string) map[string]float32 {
 	for _, value := range uniqWords {
 		i.SetWords(value)
 
-		tags[value] = float32(math.Log10(i.allPossibleWords[value]/i.numberOfDocument)) * tokenization[value]
+		tags[value] = float32(math.Log10(i.numberOfDocument/i.allPossibleWords[value])) * tokenization[value]
 	}
 
 	return tags
