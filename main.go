@@ -2,17 +2,22 @@ package main
 
 import (
 	"fmt"
+	"root/constants"
 	f "root/file"
-	t "root/tokenization"
+	t "root/tf_idf"
 )
 
 func init() {
-	t.StopWordsInit("./stop_words")
+	t.StopWordsInit(constants.STOP_WORD_PATH)
 }
 
 func main() {
-	//one of blog
-	text := f.ReadAllFile("./test_file")
+	IDF := t.NewTF_IDF()
 
-	fmt.Println(t.Tokenization(text))
+	IDF.InitData()
+
+	myFileForRead := f.ReadFile("./blog/test_file")
+
+	fmt.Println(IDF.TF_IDF(myFileForRead))
+
 }

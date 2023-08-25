@@ -1,4 +1,4 @@
-package tokenization
+package tf_idf
 
 import (
 	"bufio"
@@ -31,27 +31,41 @@ var Char = map[byte]bool{
 
 var StopWords map[string]bool = make(map[string]bool, 665)
 
-func Tokenization(text string) map[string]uint {
-	allWords := allWords(text)
+func Tokenization(text string) (map[string]float32, []string, int) {
+	allWords, lenArray := allWords(text)
 
-	tokenization := make(map[string]uint, len(allWords))
+	tokenization, wordCounter, uniqWords := make(map[string]float32, lenArray/4), make(map[string]uint, lenArray/4), make([]string, 0, lenArray/4) // malo veci negko sto bi trebao biti capacity, ali trebalo bi biti zanemarivo!
 
 	for _, word := range allWords {
+		//parse word to readable format
 		wordChanger(&word)
 
+		//check if is number or if is stop word
 		if IsNumber(word) || StopWords[word] {
 			continue
 		}
 
-		tokenization[word]++
+		//if nit exist, add as uniq word :D
+		if _, ok := wordCounter[word]; !ok {
+			uniqWords = append(uniqWords, word)
+		}
+
+		//word count in document
+		wordCounter[word]++
+
+		//frequency of word in document
+		tokenization[word] = float32(wordCounter[word]) / float32(lenArray)
 	}
 
-	return tokenization
+	return tokenization, uniqWords, len(tokenization)
 }
 
 // faster way
-func allWords(text string) []string {
-	var counter, start int
+func allWords(text string) ([]string, uint) {
+	var (
+		counter uint
+		start   int
+	)
 
 	for index := 0; index < len(text); index++ {
 		if text[index] == ' ' {
@@ -75,7 +89,7 @@ func allWords(text string) []string {
 		words[counter] = text[start:]
 	}
 
-	return words
+	return words, counter
 }
 
 // make perfect word for tokenization, lower case word without (. , : ? ! ...)
@@ -119,55 +133,4 @@ func StopWordsInit(path string) {
 
 		StopWords[scanner.Text()] = true
 	}
-}
-
-//SVE STO JE IPOD SE VIŠE NE KORISTI :D
-//========================================================================================
-
-// zasto je ovo 20x sporije??????
-func Tokenization2(text string) map[string]uint {
-	allWords := allWords(text)
-
-	tokenization := make(map[string]uint, len(allWords))
-
-	for _, word := range allWords {
-		for index := 0; index < len(text); index++ {
-			if _, ok := Char[(text)[index]]; ok {
-				if len(word)-1 < index {
-					continue
-				}
-
-				word = ((word)[:index]) + ((word)[index+1:])
-			}
-
-			text = strings.ToLower(text)
-		}
-		tokenization[word]++
-	}
-
-	return tokenization
-}
-
-// this is slower
-func testGolangFunc(text string) []string {
-	return strings.Fields(text)
-}
-
-// the most slower
-func splitTextIntoWords(text string) []string {
-	words := make([]string, 0)
-	start := 0
-
-	for index, char := range text {
-		if char == ' ' {
-			words = append(words, text[start:index])
-			start = index + 1
-		}
-	}
-
-	if start < len(text) {
-		words = append(words, text[start:])
-	}
-
-	return words
 }
