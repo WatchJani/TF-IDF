@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"root/constants"
 	t "root/tf_idf"
 
@@ -56,8 +55,6 @@ func main() {
 
 	IDF := t.NewTF_IDF(store.DB)
 	IDF.DatabaseInit()
-
-	fmt.Println(IDF.GetAllWordDocument())
 
 	app := router.New()
 	r.TF_IDF(app, IDF)

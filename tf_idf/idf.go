@@ -1,6 +1,7 @@
 package tf_idf
 
 import (
+	"database/sql"
 	"encoding/json"
 	"log"
 	"math"
@@ -114,13 +115,13 @@ func (i *IDF) DatabaseInit() {
 	}
 
 	query = "SELECT SUM(id) FROM tag.document;"
-	var sum int
+	var sum sql.NullFloat64
 	err = i.QueryRow(query).Scan(&sum)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	i.numberOfDocument = float64(sum)
+	i.numberOfDocument = sum.Float64
 }
 
 func (i *IDF) GenerateTag(ctx *fasthttp.RequestCtx) {
