@@ -38,12 +38,12 @@ func main() {
 		return keyValueList[i].Value > keyValueList[j].Value
 	})
 
-	topKeys := make([]string, 0, 4)
-	for i := 0; i < 4 && i < len(keyValueList); i++ {
+	topKeys := make([]string, 0, 8)
+	for i := 0; i < 8 && i < len(keyValueList); i++ {
 		topKeys = append(topKeys, keyValueList[i].Key)
 	}
 
 	fmt.Println(time.Since(start))
 
-	fmt.Println("Best 4 tags:", topKeys)
+	fmt.Println("Best 5 tags:", topKeys)
 }
