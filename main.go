@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"root/constants"
 	f "root/file"
 	t "root/tf_idf"
+	"sort"
+	"time"
 )
 
 func init() {
@@ -22,25 +25,25 @@ func main() {
 
 	myFileForRead := f.ReadFile("./blog/test_file")
 
-	// start := time.Now()
+	start := time.Now()
 
-	IDF.TF_IDF(myFileForRead)
+	data := IDF.TF_IDF(myFileForRead)
 
-	// var keyValueList []KeyValue
-	// for k, v := range data {
-	// 	keyValueList = append(keyValueList, KeyValue{k, v})
-	// }
+	var keyValueList []KeyValue
+	for k, v := range data {
+		keyValueList = append(keyValueList, KeyValue{k, v})
+	}
 
-	// sort.Slice(keyValueList, func(i, j int) bool {
-	// 	return keyValueList[i].Value > keyValueList[j].Value
-	// })
+	sort.Slice(keyValueList, func(i, j int) bool {
+		return keyValueList[i].Value > keyValueList[j].Value
+	})
 
-	// topKeys := make([]string, 0, 4)
-	// for i := 0; i < 4 && i < len(keyValueList); i++ {
-	// 	topKeys = append(topKeys, keyValueList[i].Key)
-	// }
+	topKeys := make([]string, 0, 4)
+	for i := 0; i < 4 && i < len(keyValueList); i++ {
+		topKeys = append(topKeys, keyValueList[i].Key)
+	}
 
-	// fmt.Println(time.Since(start))
+	fmt.Println(time.Since(start))
 
-	// fmt.Println("Best 4 tags:", topKeys)
+	fmt.Println("Best 4 tags:", topKeys)
 }

@@ -11,7 +11,7 @@ import (
 )
 
 // Character for remove from word
-var Char = map[byte]bool{
+var Char = map[rune]bool{
 	',':  true,
 	'?':  true,
 	'.':  true,
@@ -28,6 +28,7 @@ var Char = map[byte]bool{
 	'/':  true,
 	'"':  true,
 	'-':  true,
+	'’':  true,
 }
 
 var StopWords map[string]bool = make(map[string]bool, 665)
@@ -97,30 +98,21 @@ func allWords(text string) ([]string, uint) {
 
 // make perfect word for tokenization, lower case word without (. , : ? ! ...)
 func wordChanger(text *string) error {
-	for index := 0; index < len(*text); index++ {
-		if _, ok := Char[(*text)[index]]; ok {
-			characterRemove(text, index)
+	newTextRunes := make([]rune, 0, len(*text)) // Novi niz runa bez rezervacije kapaciteta
+
+	for _, char := range *text {
+		if _, ok := Char[char]; !ok {
+			newTextRunes = append(newTextRunes, char)
 		}
 	}
 
-	*text = strings.ToLower(*text)
+	*text = strings.ToLower(string(newTextRunes))
 
 	if len(*text) == 0 {
 		return errors.New("Empty string")
 	}
-	// fmt.Println(*text)
 
 	return nil
-}
-
-// remove , ? . ! : ; in words
-func characterRemove(word *string, index int) {
-	if len(*word)-1 < index {
-		return
-	}
-
-	*word = ((*word)[:index]) + ((*word)[index+1:])
-
 }
 
 func IsNumber(str string) bool {

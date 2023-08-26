@@ -32,7 +32,6 @@ func DocumentInit(paths []string) <-chan string {
 		for _, path := range paths {
 			ReadAllFileSync(constants.PATH_REP+path, allDocument)
 		}
-
 		close(allDocument)
 	}()
 

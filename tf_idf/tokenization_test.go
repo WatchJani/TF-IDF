@@ -5,14 +5,6 @@ import (
 	"testing"
 )
 
-func BenchmarkCharacterRemove(b *testing.B) {
-	text := "api."
-
-	for i := 0; i < b.N; i++ {
-		characterRemove(&text, 3)
-	}
-}
-
 func BenchmarkWordChanger(b *testing.B) {
 	text := "industry."
 
