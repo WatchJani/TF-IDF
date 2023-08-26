@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -22,11 +23,11 @@ type Configuration struct {
 // DB_HOST DB_PORT DB_USER DB_PASSWORD DB_NAME
 func PostgresConfiguration() *Configuration {
 	return &Configuration{
-		Host:     "localhost",
-		Port:     "5432",
-		User:     "janko",
-		Password: "JankoKondic72621@",
-		Name:     "tag",
+		Host:     os.Getenv("DB_HOST"),
+		Port:     os.Getenv("DB_PORT"),
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
+		Name:     os.Getenv("DB_NAME"),
 	}
 }
 

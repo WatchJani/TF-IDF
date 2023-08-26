@@ -7,7 +7,6 @@ import (
 )
 
 func TF_IDF(app *router.Router, tf_idf *t.IDF) {
-
 	app.POST("/training", tf_idf.Training)
 	app.POST("/", tf_idf.GenerateTag)
 }
