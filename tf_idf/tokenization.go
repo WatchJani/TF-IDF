@@ -31,13 +31,16 @@ var Char = map[rune]bool{
 	'’':  true,
 	'@':  true,
 	'*':  true,
+	'&':  true,
+	'[':  true,
+	']':  true,
 }
 
 var StopWords map[string]bool = make(map[string]bool, 665)
 
 func Tokenization(text string) (map[string]float32, []string, int) {
-	allWords, lenArray := allWords(text)
-
+	allWords := strings.Fields(text)
+	lenArray := len(allWords)
 	tokenization, wordCounter, uniqWords := make(map[string]float32, lenArray/4), make(map[string]uint, lenArray/4), make([]string, 0, lenArray/4) // malo veci negko sto bi trebao biti capacity, ali trebalo bi biti zanemarivo!
 
 	for _, word := range allWords {

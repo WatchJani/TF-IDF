@@ -6,11 +6,12 @@ import (
 )
 
 func BenchmarkWordChanger(b *testing.B) {
-	text := "industry."
+	text := "       industry.     "
 
 	for i := 0; i < b.N; i++ {
 		wordChanger(&text)
 	}
+
 }
 
 var myText = f.ReadFile("./test_file")
