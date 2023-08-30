@@ -120,11 +120,13 @@ func wordChanger(text *string) error {
 	return nil
 }
 
+// check is number
 func IsNumber(str string) bool {
 	_, err := strconv.Atoi(str)
 	return err == nil
 }
 
+// init stop word
 func StopWordsInit(path string) {
 	file, err := os.Open(path)
 	e.ErrorHandler(err)

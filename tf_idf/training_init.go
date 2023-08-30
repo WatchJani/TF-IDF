@@ -7,6 +7,7 @@ import (
 	"sync"
 )
 
+// init from files
 func (i *IDF) InitData() {
 	paths := f.ReadFile(constants.LOAD_ALL_TEST_PATH)
 
